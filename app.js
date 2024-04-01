@@ -66,7 +66,6 @@ document.getElementById('times-form').addEventListener('submit', (e) => {
                 submit_btn.textContent = "START STUDYING";
                 document.getElementById("tomato").style.filter = "brightness(100%)";
                 submit_btn.disabled = false;
-                open_eyes();
                 document.getElementById('timer-display').textContent = "00:00";
             }
         }
