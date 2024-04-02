@@ -36,6 +36,9 @@ document.getElementById('times-form').addEventListener('submit', (e) => {
     // Convert the inserted rest time into an integer, base 10
     const rest_time_min = parseInt(document.getElementById('rest-time').value, 10);
 
+    //Convert the inserted number of cycles into an integer, base 10
+    let cycles_num = parseInt(document.getElementById("cycles-num").value, 10);
+
     //Calculate durations in seconds; used for animations
     const study_time_sec = study_time_min * 60;
     const rest_time_sec = rest_time_min * 60;
@@ -62,11 +65,22 @@ document.getElementById('times-form').addEventListener('submit', (e) => {
             }
             else if (resting) {
                 resting = false;
-                clearInterval(interval);
-                submit_btn.textContent = "START STUDYING";
-                document.getElementById("tomato").style.filter = "brightness(100%)";
-                submit_btn.disabled = false;
-                document.getElementById('timer-display').textContent = "00:00";
+                cycles_num--;
+                if (cycles_num > 0) {
+                    studying = true;
+                    end_time = Date.now() + study_time_min * 60000;
+                    document.getElementById("tomato").style.filter = "brightness(100%)";
+                    get_ready_to_study();
+                    document.getElementById("tomato-body").style.animation = `become-ripe ${study_time_sec}s linear forwards`;
+                    submit_btn.textContent = "STUDYING...";
+                }
+                else {
+                    clearInterval(interval);
+                    submit_btn.textContent = "START STUDYING";
+                    document.getElementById("tomato").style.filter = "brightness(100%)";
+                    submit_btn.disabled = false;
+                    document.getElementById('timer-display').textContent = "00:00";
+                }
             }
         }
         else {
